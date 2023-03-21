@@ -3,7 +3,7 @@
 # coding: utf-8
 
 from keras.models import load_model
-from keras_contrib.layers import InstanceNormalization
+from tensorflow_addons.layers import InstanceNormalization
 import hypermapper.deep.metrics
 import sys
 

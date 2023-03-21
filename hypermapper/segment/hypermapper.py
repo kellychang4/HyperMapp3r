@@ -120,7 +120,7 @@ def check_orient(in_img_file, r_orient, l_orient, out_img_file):
 def image_std(img, img_std):
     print("\n standardization ...")
     image = nib.load(img)
-    data = image.get_data()
+    data = image.get_fdata()
 
     data_mask = np.abs(data) > 0.0
 
@@ -138,7 +138,7 @@ def image_std(img, img_std):
 def cutoff_img(in_file, cutoff_percents, out_file):
     print("\n thresholding ...")
     img = nib.load(in_file)
-    data = img.get_data()
+    data = img.get_fdata()
     cutoff_low = np.percentile(data, cutoff_percents)
     cutoff_high = np.percentile(data, 100 - cutoff_percents)
     print(cutoff_low)
@@ -151,7 +151,7 @@ def cutoff_img(in_file, cutoff_percents, out_file):
 
 def normalize_sample_wise_img(in_file, out_file):
     image = nib.load(in_file)
-    img = image.get_data()
+    img = image.get_fdata()
     # standardize intensity for data
     print("\n standardizing ...")
     std_img = (img - img.mean()) / img.std()
@@ -370,7 +370,7 @@ def main(args):
                 print("\n pre-processing %s" % training_mods[s])
                 c3.run()
             res_data = nib.load(seq_res)
-            test_data[0, s, :, :, :] = res_data.get_data()
+            test_data[0, s, :, :, :] = res_data.get_fdata()
 
         res = nib.load(res_t1_file)
         #############################################################################################
@@ -382,7 +382,7 @@ def main(args):
             print(sample_id)
             pred = run_test_case(test_data=test_data, model_json=model_json, model_weights=model_weights,
                                  affine=res.affine, output_label_map=True, labels=1)
-            pred_s[sample_id, :, :, :] = pred.get_data()
+            pred_s[sample_id, :, :, :] = pred.get_fdata()
             #nib.save(pred, os.path.join(pred_dir_mcdp, "wmh_pred_%s.nii.gz" % sample_id))
 
         # computing mean

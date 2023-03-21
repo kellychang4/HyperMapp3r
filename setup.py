@@ -32,15 +32,25 @@ setup(
         'Topic :: Scientific/Engineering :: Bio-Informatics',
         'Topic :: Scientific/Engineering :: Image Recognition',
     ],
-    dependency_links=[
-        'git+https://github.com/keras-team/keras-contrib.git'
-    ],
-    install_requires=['nibabel', 'nipype', 'argparse', 'argcomplete', 'joblib', 'keras==2.1.2', 'nilearn', 'scikit-learn',
-        'keras-contrib', 'pandas', 'numpy', 'plotly', 'PyQt5', 'termcolor'
+    install_requires=[
+        'argcomplete', 
+        'argparse',
+        'joblib',
+        'keras==2.11', 
+        'nibabel', 
+        'nilearn', 
+        'nipype', 
+        'numpy', 
+        'pandas', 
+        'plotly', 
+        'PyQt5', 
+        'scikit-learn',
+        'tensorflow_addons=0.19.0', 
+        'termcolor'
     ],
     extras_require={
-        "hypermapper": ["tensorflow==1.15"],
-        "hypermapper_gpu": ["tensorflow-gpu==1.15"],
+        "hypermapper": ["tensorflow==2.11"],
+        "hypermapper-gpu": ["tensorflow-gpu==2.11"],
     },
     entry_points={'console_scripts': ['hypermapper=hypermapper.cli:main']},
     keywords=[

@@ -43,7 +43,7 @@ def main(in_args):
     img, ref, out = parse_inputs(parser, in_args)
 
     in_img = nib.load(img)
-    in_img_data = in_img.get_data()
+    in_img_data = in_img.get_fdata()
     in_ref = nib.load(ref)
 
     in_img_aff = in_img.affine
@@ -93,7 +93,7 @@ def main(in_args):
         z = int(np.round(np.abs(z) / np.abs(vzi)))
 
         img_expand = np.zeros(in_ref.shape)
-        img_expand[x:x + dimx, y:y + dimy, z:z + dimz] = in_img.get_data()
+        img_expand[x:x + dimx, y:y + dimy, z:z + dimz] = in_img.get_fdata()
         nii = nib.Nifti1Image(img_expand, affine=in_ref.affine)
 
     nib.save(nii, out)

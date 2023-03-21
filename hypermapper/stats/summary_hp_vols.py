@@ -56,7 +56,7 @@ def main(args):
             index.append(subjs_dirs[i])
             # mask = nib.load(os.path.join(input_dir, subjs_dirs[i], subjs_dirs[i] + mask_name))
             mask = nib.load(glob.glob(os.path.join(input_dir, subjs_dirs[i], '*%s' % mask_name))[0])
-            mask_data = mask.get_data()
+            mask_data = mask.get_fdata()
             mask_hdr = mask.get_header()
             voxel_size = mask_hdr.get_zooms()
             voxel_volume = voxel_size[0] * voxel_size[1] * voxel_size[2]

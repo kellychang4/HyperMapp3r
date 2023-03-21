@@ -1,30 +1,33 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
-echo "Adding external dependencies to ${SCRIPTPATH}"
+SCRIPT_PATH="$( cd "$(dirname "$0")" ; pwd -P )"
+echo "Adding external dependencies to ${SCRIPT_PATH}"
 
 # create depends dir
-mkdir -p "${SCRIPTPATH}/depends/"
+mkdir -p "${SCRIPT_PATH}/depends/"
 
-# find out if the user has ANTS
-antspath=$( command -v antsRegistration )
-if [[ -z "${antspath}" ]]; then
-	echo "Environment variable ANTSPATH does not exist. Downloading and installing software to ${SCRIPTPATH}/depends/ANTs"
-    export ANTSPATH="$ANTSPATH:${SCRIPTPATH}/depends/ANTs"
-    export PATH="$PATH:$ANTSPATH"
-    mkdir -p "${SCRIPTPATH}/depends/ANTs" && \
-    curl -sSL "https://dl.dropbox.com/s/2f4sui1z6lcgyek/ANTs-Linux-centos5_x86_64-v2.2.0-0740f91.tar.gz" \
-    | tar -xzC "${SCRIPTPATH}/depends/ANTs" --strip-components 1
+# find out if the user has ANTS installed
+ants_path=$( command -v antsRegistration )
+if [[ -z "${ants_path}" ]]; then
+	echo "ANTs was not found." 
+    echo "Downloading and installing software to ${SCRIPT_PATH}/depends/ANTs."
+    echo "Path will be added to PATH environment variable."
+    ants_depends="${SCRIPT_PATH}/depends/ANTs"
+    mkdir -p "${ants_depends}" && \
+    curl -sL "https://github.com/ANTsX/ANTs/releases/download/v2.4.3/ants-2.4.3-ubuntu-22.04-X64-gcc.zip" | \
+        tar -xzC "${ants_depends}" --strip-components 1     
+    export PATH="${ants_depends}/bin:${PATH}"   
 fi
 
-
 # find out if user has c3d installed
-c3dpath=$( command -v c3d )
-if [[ -z "${c3dpath}" ]]; then
-	echo "Command c3d was not found. Downloading and installing software to ${SCRIPTPATH}/depends/c3d. Path will be added to PATH environment variable."
-    mkdir -p "${SCRIPTPATH}/depends/c3d/"
-    wget https://downloads.sourceforge.net/project/c3d/c3d/Nightly/c3d-nightly-Linux-x86_64.tar.gz && \
-    tar -xzvf c3d-nightly-Linux-x86_64.tar.gz && mv c3d-1.1.0-Linux-x86_64/* "${SCRIPTPATH}/depends/c3d/" && \
-    rm c3d-nightly-Linux-x86_64.tar.gz
-    export PATH="${SCRIPTPATH}/depends/c3d/c3d-1.1.0-Linux-x86_64/bin/:$PATH"
+c3d_path=$( command -v c3d )
+if [[ -z "${c3d_path}" ]]; then
+	echo "Command c3d was not found."
+    echo "Downloading and installing software to ${SCRIPT_PATH}/depends/c3d."
+    echo "Path will be added to PATH environment variable."
+    c3d_depends="${SCRIPT_PATH}/depends/c3d"
+    mkdir -p "${c3d_depends}" && \
+    curl -sL "https://downloads.sourceforge.net/project/c3d/c3d/Nightly/c3d-nightly-Linux-x86_64.tar.gz" | \
+        tar -xzC "c3d" --strip-components 1
+    export PATH="${c3d_depends}/bin:${PATH}"
 fi
