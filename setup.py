@@ -45,7 +45,7 @@ setup(
         'plotly', 
         'PyQt5', 
         'scikit-learn',
-        'tensorflow_addons=0.19.0', 
+        'tensorflow_addons==0.19.0', 
         'termcolor'
     ],
     extras_require={
