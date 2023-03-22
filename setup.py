@@ -49,7 +49,7 @@ setup(
         'termcolor'
     ],
     extras_require={
-        "hypermapper": ["tensorflow==2.11"],
+        "hypermapper": ["intel-tensorflow==2.11"],
         "hypermapper-gpu": ["tensorflow-gpu==2.11"],
     },
     entry_points={'console_scripts': ['hypermapper=hypermapper.cli:main']},
